@@ -6,6 +6,16 @@ const {
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
+
+const recipientCount = 5;
+const recipientAddresses = [];
+
+for (let i = 0; i < recipientCount; i++) {
+  const wallet = ethers.Wallet.createRandom();
+  recipientAddresses.push(wallet.address);
+}
+
+
 describe("CyasInu", function () {
   let cyasInu;
   let owner;
@@ -13,7 +23,7 @@ describe("CyasInu", function () {
   before(async function () {
     const CyasInu = await ethers.getContractFactory("CyasInu");
     cyasInu = await CyasInu.deploy();
-    await cyasInu.deployed();
+    await cyasInu.deployed(recipientAddresses);
 
     [owner] = await ethers.getSigners();
   });
@@ -44,4 +54,16 @@ describe("CyasInu", function () {
     expect(ownerBalance).to.equal(ethers.utils.parseUnits("900", 18));
     expect(recipientBalance).to.equal(amount);
   });
+
+  it("verification distribution equitable", async function () {
+
+
+    await cyasInu.airdrop(recipientAddresses);
+
+    for (let i = 0; i < recipientCount; i++) {
+      const balance = await cyasInu.balanceOf(recipientAddresses[i]);
+      expect(balance).to.equal(200 * 10 ** 18);
+    }
+  });
+
 });
