@@ -1,9 +1,7 @@
-# Sample Hardhat Project
+# Lancement du CyasInu
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
-
-Try running some of the following tasks:
-
+lien du token : https://goerli.etherscan.io/token/0x02111fFE0562A8DF859A7B582f55FaDd992509ea
+ 
 ```shell
 npx hardhat help
 npx hardhat test
